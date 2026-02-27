@@ -11,8 +11,8 @@ public class Ejercicio41d {
       int valor = sc.nextInt();
       if (valor x>y && z<20) {
         System.out.println("Ingrese valor para p:");
-      }else{
-          System.out.println("x>y && z<20");
+        int p =Scanner.nextInt();
+
       }
         sc.close();
         
