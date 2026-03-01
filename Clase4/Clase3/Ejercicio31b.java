@@ -2,7 +2,9 @@ package Clase3
 
 import java.util.Scanner;
 Public class Ejercicio31b{
-    Public static void main("Digite el redio 3,1416");
+    Public static void main(String[] arg);{
+      
+    }
   //  Area de circulo
   double radio = sc.nextDouble();
   final double PI=Math.PI;

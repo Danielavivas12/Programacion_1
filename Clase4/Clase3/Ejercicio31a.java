@@ -4,7 +4,7 @@ import  java.util.Scanner;
 public class Ejercicio31a {
 }
 Public static void main(String[] arg);
-Scanner sc new Scanner (System.in);
+Scanner sc = new Scanner (System.in);
 // Area del cuadrado 
 System.out.print("Digite el lado del cuadrado");
 double lado = sc.nextDouble();
