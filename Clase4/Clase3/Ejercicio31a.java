@@ -1,4 +1,4 @@
-package Clase4.Clase3;
+package .Clase3;
 
 import  java.util.Scanner;
 public class Ejercicio31a {
