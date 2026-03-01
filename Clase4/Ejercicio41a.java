@@ -2,6 +2,7 @@ package Clase4;
 
 import java.util.Scanner;
 
+
 public class Ejercicio41a {
     public static void main(String[] args) {
 
