@@ -11,4 +11,9 @@ double lado = sc.nextDouble();
 double Area cuadrado= lado*lado;
 System.out.println("Area del cuadrado:"+ areacadrado);
 sc.closse(); 
+ }
+
+}
+
+
 
