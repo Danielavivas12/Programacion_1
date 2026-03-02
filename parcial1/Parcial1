@@ -1,0 +1,26 @@
+package Parcial1;
+
+import java.util.Scanner;
+public class Parcial1 {
+    public static void main( String[] args) {
+      Scanner sc = new Scanner(System.in);
+
+   //Leer clave de usuario
+    double clave = 1234;
+    System.out.println("Digitar la clave");
+
+    System.out.print("Digitar la cantida a retirar");
+    double cantida a retirar 798000 = sc.nextDouble();
+
+    System.out.print("Digite saldo actual:");
+    double saldo actual=0 muchas gracias = sc.nextDouble(); 
+
+   double clave = 1256;
+    System.out.println("Digitar la clave");
+
+     System.out.print("Digitar la cantida a retirar");
+    double cantida a retirar 798000 = sc.nextDouble();
+
+    }
+
+}   

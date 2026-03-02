@@ -16,7 +16,7 @@ public static void main(String[] arg){
         System.out.println(num1+"es divisorde"+num2);
 
     }else{
-        System.out.println("ningunode los numeros es divisor del otro");
+        System.out.println("ninguno de los numeros es divisor del otro");
     }
 
     sc.close();
