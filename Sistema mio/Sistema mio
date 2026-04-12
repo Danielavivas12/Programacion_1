@@ -1,0 +1,248 @@
+package SistemaMio;
+
+    import java.util.Scanner;
+
+        public class SistemaMIO {
+
+    static Scanner sc = new Scanner(System.in);
+
+    //  FASE 1 //
+    public static void cobrarTarifa() {
+        System.out.print("Ingrese la hora (0-23): ");
+        int hora = sc.nextInt();
+
+        System.out.println("Tipo de pasajero:");
+        System.out.println("1. Normal");
+        System.out.println("2. Estudiante");
+        System.out.println("3. Adulto mayor");
+        System.out.println("4. Discapacitado");
+        System.out.print("Seleccione: ");
+        int tipo = sc.nextInt();
+
+        double tarifaBase = 0;
+        double descuento = 0;
+        String nombreTipo = "";
+
+        boolean esHoraValle = (hora >= 9 && hora <= 16);
+
+        switch (tipo) {
+            case 1:
+                nombreTipo = "Normal";
+                tarifaBase = 3000;
+                break;
+            case 2:
+                nombreTipo = "Estudiante";
+                tarifaBase = 1500;
+                if (esHoraValle) {
+                    descuento = tarifaBase * 0.10;
+                }
+                break;
+            case 3:
+                nombreTipo = "Adulto mayor";
+                tarifaBase = 0;
+                break;
+            case 4:
+                nombreTipo = "Discapacitado";
+                tarifaBase = 0;
+                break;
+            default:
+                System.out.println("Tipo invalido");
+                return;
+        }
+
+        double total = tarifaBase - descuento;
+
+        System.out.println("\nTIQUETE MIO - CALI");
+        System.out.println("Hora: " + hora + ":00");
+        System.out.println("Tipo: " + nombreTipo);
+        System.out.println("Tarifa base: $" + tarifaBase);
+        System.out.println("Descuento: $" + descuento);
+        System.out.println("TOTAL: $" + total);
+    }
+
+    //  FASE 2 //
+         public static void controlRuta() {
+            
+            int capacidadMaxima = 80;
+            int pasajerosActuales = 0;
+            int totalSubieron = 0;
+            int totalBajaron = 0;
+            int paradasRecorridas = 0;
+            int paradasConAforo = 0;
+            int parada = 1;
+            boolean rutaActiva = true;
+
+        while (parada <= 25 && rutaActiva) {
+            System.out.println("\n=== PARADA " + parada + " de 25 ===");
+            System.out.println("Pasajeros: " + pasajerosActuales);
+
+            System.out.print("Cuantos SUBEN? (-1 para terminar): ");
+            int suben = sc.nextInt();
+
+            if (suben == -1) {
+                rutaActiva = false;
+            } else {
+                System.out.print("Cuantos BAJAN?: ");
+                int bajan = sc.nextInt();
+
+                if (bajan > pasajerosActuales) {
+                    System.out.println("Error: bajan mas de los que hay");
+                    continue;
+                }
+
+                if (pasajerosActuales + suben - bajan > capacidadMaxima) {
+                    System.out.println("Error: se supera el aforo");
+                    continue;
+                }
+
+                pasajerosActuales = pasajerosActuales + suben - bajan;
+                totalSubieron += suben;
+                totalBajaron += bajan;
+
+                if (pasajerosActuales == 80) {
+                    paradasConAforo++;
+                }
+
+                double porcentaje = (pasajerosActuales * 100.0) / capacidadMaxima;
+                String estado;
+
+                if (pasajerosActuales == 80) {
+                    estado = "AFORO MAXIMO";
+                } else if (porcentaje >= 60) {
+                    estado = "BUS LLENO";
+                } else {
+                    estado = "NORMAL";
+                }
+
+                System.out.println("Estado: " + estado + " (" + (int)porcentaje + "%)");
+
+                parada++;
+                paradasRecorridas++;
+            }
+        }
+
+        System.out.println("\nRESUMEN");
+        System.out.println("Paradas: " + paradasRecorridas);
+        System.out.println("Subieron: " + totalSubieron);
+        System.out.println("Bajaron: " + totalBajaron);
+        System.out.println("Pasajeros finales: " + pasajerosActuales);
+        System.out.println("Paradas con aforo: " + paradasConAforo);
+    }
+
+    // FASE 4 //
+        public static void reporteDia() {
+        int totalPasajeros = 0;
+        double totalRecaudo = 0;
+        int maxPasajeros = 0;
+        int minPasajeros = Integer.MAX_VALUE;
+        String rutaMax = "";
+        String rutaMin = "";
+        double maxRecaudo = 0;
+        String rutaMayorRecaudo = "";
+
+        for (int i = 1; i <= 3; i++) {
+            String nombre = (i == 1) ? "T31" : (i == 2) ? "A10" : "P22A";
+
+            System.out.println("\nRuta: " + nombre);
+            System.out.print("Pasajeros: ");
+            int pasajeros = sc.nextInt();
+            System.out.print("Vueltas: ");
+            int vueltas = sc.nextInt();
+            System.out.print("% Normal: ");
+            int pctNormal = sc.nextInt();
+
+            int pctEst = 100 - pctNormal;
+
+            double recaudo = (pasajeros * ((pctNormal / 100.0) * 3000 + (pctEst / 100.0) * 1500));
+
+            totalPasajeros += pasajeros;
+            totalRecaudo += recaudo;
+
+            if (pasajeros > maxPasajeros) {
+                maxPasajeros = pasajeros;
+                rutaMax = nombre;
+            }
+
+            if (pasajeros < minPasajeros) {
+                minPasajeros = pasajeros;
+                rutaMin = nombre;
+            }
+
+            if (recaudo > maxRecaudo) {
+                maxRecaudo = recaudo;
+                rutaMayorRecaudo = nombre;
+            }
+
+            System.out.println("Recaudo: $" + recaudo);
+        }
+
+        System.out.println("\nTOTAL pasajeros: " + totalPasajeros);
+        System.out.println("TOTAL recaudo: $" + totalRecaudo);
+        System.out.println("Ruta mas concurrida: " + rutaMax);
+        System.out.println("Ruta menos concurrida: " + rutaMin);
+        System.out.println("Mayor recaudo: " + rutaMayorRecaudo);
+        System.out.println("Promedio: " + (totalPasajeros / 3));
+    }
+
+    // FASE 5 //
+    public static void alertas() {
+        int rutasConAlerta = 0;
+
+        for (int i = 1; i <= 3; i++) {
+            String nombre = (i == 1) ? "T31" : (i == 2) ? "A10" : "P22A";
+
+            System.out.println("\nAnalisis: " + nombre);
+            int pasajeros = sc.nextInt();
+            int vueltas = sc.nextInt();
+            int retraso = sc.nextInt();
+            double recaudo = sc.nextDouble();
+
+            boolean a1 = pasajeros < 500;
+            boolean a2 = vueltas > 20;
+            boolean a3 = retraso > 90;
+            boolean a4 = recaudo < (pasajeros * 1500 * 0.70);
+
+            boolean alerta = a1 || a2 || a3 || a4;
+
+            if (!alerta) {
+                System.out.println("OK");
+            } else {
+                rutasConAlerta++;
+                System.out.println("ALERTA");
+            }
+        }
+
+        System.out.println("Rutas con alerta: " + rutasConAlerta);
+    }
+
+    // MENU // 
+    public static void main(String[] args) {
+        int opcion = -1;
+
+        while (opcion != 0) {
+            System.out.println("\n1. Tarifa");
+            System.out.println("2. Ruta");
+            System.out.println("3. Reporte + Alertas");
+            System.out.println("0. Salir");
+            opcion = sc.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    cobrarTarifa();
+                    break;
+                case 2:
+                    controlRuta();
+                    break;
+                case 3:
+                    reporteDia();
+                    alertas();
+                    break;
+                case 0:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opcion invalida");
+            }
+        }
+    }
+}
