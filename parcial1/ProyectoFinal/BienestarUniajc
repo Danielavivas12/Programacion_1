@@ -1,0 +1,94 @@
+public class SistemaBienestarApp { 
+    
+}
+public static void main(String[] args) {
+
+        System.out.println(“--- Inicio del Sistema Bienestar UNIAJC ---“);
+
+        // 1. Instanciar (crear objetos) de Estudiantes
+        System.out.println(“\n--- Creando Estudiantes ---“);
+        Estudiante estudiante1 = new Estudiante(“E001”, “Ana Gomez”, ana.gomez@uniajc.edu.co, “pass123”, 4.2);
+        Estudiante estudiante2 = new Estudiante(“E002”, “Juan Perez”, juan.perez@uniajc.edu.co, “pass456”, 3.8);
+        Estudiante estudiante3 = new Estudiante(“E003”, “Maria Lopez”, maria.lopez@uniajc.edu.co, “pass789”, 4.5);
+        Estudiante estudiante4 = new Estudiante(“E004”, “Carlos Ruiz”, carlos.ruiz@uniajc.edu.co, “passabc”, 3.0); // Con promedio bajo para ejemplo
+
+        // Mostrar los objetos Estudiante creados
+        System.out.println(estudiante1);
+        System.out.println(estudiante2);
+        System.out.println(estudiante3);
+        System.out.println(estudiante4);
+
+
+        // 2. Instanciar Actividades
+        System.out.println(“\n--- Creando Actividades ---“);
+        Actividad natacion = new Actividad(“A001”, “Clases de Natación”, “Aprende a nadar”, “Deporte”, 2, “Martes 14:00-16:00”, new String[]{“Saber flotar”});
+        Actividad clubLectura = new Actividad(“A002”, “Club de Lectura”, “Discute libros”, “Cultura”, 3, “Miércoles 10:00-12:00”, new String[]{});
+        Actividad yoga = new Actividad(“A003”, “Sesiones de Yoga”, “Mejora tu flexibilidad”, “Salud”, 1, “Martes 14:00-16:00”, new String[]{}); // Mismo horario que natación
+
+        // Mostrar los objetos Actividad creados
+        System.out.println(natacion);
+        System.out.println(clubLectura);
+        System.out.println(yoga);
+
+
+        // 3. Simular Inscripciones (Lógica de Negocio y Algoritmia)
+        System.out.println(“\n--- Simulando Inscripciones ---“);
+
+        // Estudiante1 se inscribe en Natación
+        // Aquí debería ir la lógica de Categorización Obligatoria (si aplica para natación) y Validación de Horarios
+        // Para simplificar el pseudocódigo, asu.mimos que pasa las validaciones o se manejan internamente.
+        // Asumimos que “Deporte” cumple con la Categorización Obligatoria para E001
+        natacion.inscribirEstudiante(estudiante1); 
+        estudiante1.agregarInscripcion(new Inscripcion(estudiante1, natacion, “2026-05-07”));
+
+
+        // Estudiante2 se inscribe en Club de Lectura
+        clubLectura.inscribirEstudiante(estudiante2);
+        estudiante2.agregarInscripcion(new Inscripcion(estudiante2, clubLectura, “2026-05-07”));
+
+        // Estudiante3 se inscribe en Club de Lectura (hay cupo)
+        clubLectura.inscribirEstudiante(estudiante3);
+        estudiante3.agregarInscripcion(new Inscripcion(estudiante3, clubLectura, “2026-05-07”));
+
+        // Estudiante4 intenta inscribirse en Club de Lectura (se llena el cupo)
+        clubLectura.inscribirEstudiante(estudiante4); // Esto debería agregarlo a la lista de espera
+        estudiante4.agregarInscripcion(new Inscripcion(estudiante4, clubLectura, “2026-05-07”));
+
+
+        // Simular penalización (punto 6) – Estudiante2 cancela tardíamente club de lectura
+        System.out.println(“\n--- Simulación de Cancelación y Penalización ---“);
+        // En un sistema real, se verificaría la fecha de cancelación vs. fecha de actividad
+        clubLectura.cancelarInscripcion(estudiante2); // Esto libera un cupo y mueve a Estudiante4 de la lista de espera
+        estudiante2.setTienePenalizacion(true); // Se marca como penalizado
+        System.out.println(“Estado de penalización de “ + estudiante2.getNombreCompleto() + “: “ + estudiante2.getTienePenalizacion());
+
+
+        // Ejemplo de Validación de Horarios (punto 5) – Estudiante1 intenta inscribirse en Yoga (mismo horario que Natación)
+        System.out.println(“\n--- Simulación de Validación de Horarios ---“);
+        // En una implementación real, esta validación estaría en el método de inscripción principal
+        if (estudiante1.getHistorialInscripciones().stream().anyMatch(
+            i -> i.getActividad().getHorario().equals(yoga.getHorario()))) {
+            System.out.println(“ERROR: “ + estudiante1.getNombreCompleto() + “ no puede inscribirse en “ + yoga.getNombre() + “ por conflicto de horario con “ + natacion.getNombre());
+        } else {
+            yoga.inscribirEstudiante(estudiante1);
+            estudiante1.agregarInscripcion(new Inscripcion(estudiante1, yoga, “2026-05-07”));
+        }
+
+
+        // Ejemplo de Restricción por Promedio (punto 8) – Estudiante4 intenta algo exclusivo para promedios altos
+        System.out.println(“\n--- Simulación de Restricción por Promedio ---“);
+        // Asumimos una actividad “Taller Avanzado de Robótica” que requiere promedio > 4.0
+        Actividad roboticaAvanzada = new Actividad(“A004”, “Taller Avanzado de Robótica”, “Programación de robots”, “Tecnología”, 5, “Viernes 09:00-11:00”, new String[]{“Promedio > 4.0”});
+
+        if (estudiante4.getPromedioAcademico() > 4.0) { // Estudiante4 tiene 3.0
+            roboticaAvanzada.inscribirEstudiante(estudiante4);
+        } else {
+            System.out.println(“ERROR: “ + estudiante4.getNombreCompleto() + “ no cumple con el promedio académico para “ + roboticaAvanzada.getNombre());
+        }
+
+
+        // Fin del programa
+        System.out.println(“\n--- Fin del Sistema Bienestar UNIAJC ---“);
+    }
+}
+
